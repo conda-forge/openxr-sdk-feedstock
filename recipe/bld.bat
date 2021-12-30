@@ -13,6 +13,7 @@ cmake ^
     -DDYNAMIC_LOADER=ON ^
     -DFALLBACK_CONFIG_DIRS=%LIBRARY_PREFIX%\etc\xdg ^
     -DFALLBACK_DATA_DIRS=%LIBRARY_PREFIX%\share ^
+    -DBUILD_WITH_SYSTEM_JSONCPP:BOOL=ON ^
     %SRC_DIR%
 if errorlevel 1 exit 1
 
