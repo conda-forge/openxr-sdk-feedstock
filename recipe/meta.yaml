@@ -1,5 +1,5 @@
 {% set name = "openxr-sdk" %}
-{% set version = "1.1.54" %}
+{% set version = "1.1.57" %}
 
 package:
   name: {{ name }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/KhronosGroup/OpenXR-SDK/archive/release-{{ version }}.tar.gz
-  sha256: 2055688081066e37238be996534f349420ac52ed34f8514836704232121ee7f3
+  sha256: 09f007863f1b9d8de95118ea8a9567d015a7a9dd19351ca5b2d16d1a266ff1e4
 
 build:
   number: 0
