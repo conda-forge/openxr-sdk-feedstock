@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: openxr-sdk
-  version: "1.1.60"
+  version: "1.1.61"
 
 package:
   name: ${{ name }}
@@ -10,10 +10,10 @@ package:
 
 source:
   url: https://github.com/KhronosGroup/OpenXR-SDK/archive/release-${{ version }}.tar.gz
-  sha256: a55afd26df6cb41ea8217e8375e3d4ffabdef047141f22ffe725d1c3adb1c43b
+  sha256: d5e2773d282642e6e250bd10266f316fc3ff3b8602c83db009a1f434205998e6
 
 build:
-  number: 3
+  number: 0
   skip: osx
 
 requirements:
@@ -28,11 +28,10 @@ requirements:
   host:
     - jsoncpp
     - if: linux
-      then: xorg-libxfixes
-    - if: linux
-      then: libgl-devel
-    - if: linux
-      then: xorg-xorgproto
+      then:
+        - xorg-libxfixes
+        - libgl-devel
+        - xorg-xorgproto
   run_exports:
     - ${{ pin_subpackage(name, upper_bound='x.x') }}
 
