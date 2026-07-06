@@ -37,21 +37,18 @@ requirements:
     - ${{ pin_subpackage(name, upper_bound='x.x') }}
 
 tests:
-  - script:
-      - if: not win
-        then: test -f ${PREFIX}/include/openxr/openxr.h
-      - if: linux
-        then: test -f ${PREFIX}/lib/libopenxr_loader.so
-      - if: not win
-        then: test -f ${PREFIX}/lib/cmake/openxr/OpenXRConfig.cmake
-      - if: win
-        then: if exist %PREFIX%\\Library\\include\\openxr\\openxr.h (exit 0) else (exit 1)
-      - if: win
-        then: if exist $PREFIX$\\Library\\lib\\openxr_loader.lib (exit 0) else (exit 1)
-      - if: win
-        then: if exist $PREFIX$\\Library\\bin\\openxr_loader.dll (exit 0) else (exit 1)
-      - if: win
-        then: if exist %PREFIX%\\Library\\cmake\\OpenXRConfig.cmake (exit 0) else (exit 1)
+  - package_contents:
+      include:
+        - openxr/openxr.h
+      lib:
+        - openxr_loader
+  - requirements:
+      run:
+        - cmake-package-check
+        - ${{ compiler('c') }}
+        - ${{ compiler('cxx') }}
+    script:
+      - cmake-package-check OpenXR --targets OpenXR::openxr_loader OpenXR::headers
 
 about:
   license: Apache-2.0
