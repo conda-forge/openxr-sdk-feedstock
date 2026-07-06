@@ -1,0 +1,61 @@
+schema_version: 1
+
+context:
+  name: openxr-sdk
+  version: "1.1.60"
+
+package:
+  name: ${{ name }}
+  version: ${{ version }}
+
+source:
+  url: https://github.com/KhronosGroup/OpenXR-SDK/archive/release-${{ version }}.tar.gz
+  sha256: a55afd26df6cb41ea8217e8375e3d4ffabdef047141f22ffe725d1c3adb1c43b
+
+build:
+  number: 3
+  skip: osx
+
+requirements:
+  build:
+    - ${{ compiler('c') }}
+    - ${{ stdlib("c") }}
+    - ${{ compiler('cxx') }}
+    - if: not win
+      then: make
+    - cmake
+    - pkg-config
+  host:
+    - jsoncpp
+    - if: linux
+      then: xorg-libxfixes
+    - if: linux
+      then: libgl-devel
+    - if: linux
+      then: xorg-xorgproto
+  run_exports:
+    - ${{ pin_subpackage(name, upper_bound='x.x') }}
+
+tests:
+  - package_contents:
+      include:
+        - openxr/openxr.h
+      lib:
+        - openxr_loader
+  - requirements:
+      run:
+        - cmake-package-check
+        - ${{ compiler('c') }}
+        - ${{ compiler('cxx') }}
+    script:
+      - cmake-package-check OpenXR --targets OpenXR::openxr_loader OpenXR::headers
+
+about:
+  license: Apache-2.0
+  license_file: LICENSE
+  summary: OpenXR headers and loader.
+  homepage: https://github.com/KhronosGroup/OpenXR-SDK
+
+extra:
+  recipe-maintainers:
+    - traversaro
